@@ -68,17 +68,44 @@ document.getElementById('second-form').addEventListener('submit', function(event
 
     while (edresLeft > 0) {
         let maxUpoloipo = -1;
-        let idx = -1;
+        let maxIndexes = [];
         for (let i = 1; i <= dunameis; i++) {
             if (upoloipo[i] > maxUpoloipo) {
                 maxUpoloipo = upoloipo[i];
-                idx = i;
+                maxIndexes = [i];
             }
-        }
-        edresPerParty[idx]++;
-        upoloipo[idx] = -1;
-        edresLeft--;
+            if (edresLeft==1 && upoloipo[i] == maxUpoloipo){
+                maxIndexes.push(i);
+            }
+        if (edresLeft === 1 && maxIndexes.length > 1) {
+            const partyNames = maxIndexes.map(i =>
+                document.getElementById(`party${i}_name`).value || `Παράταξη ${i}`
+        );
+
+            let tieText = `<br><strong>Η τελευταία έδρα παίζεται ανάμεσα σε:</strong> ${partyNames.join(' και ')}<br>`;
+            tieText += `<em>Πιθανά σενάρια κατανομής:</em><br>`;
+
+            maxIndexes.forEach(idx => {
+                let hypothetical = [...edresPerParty];
+                hypothetical[idx]++;
+                tieText += `${partyNames[idx - 1]} παίρνει την έδρα: `;
+                for (let j = 1; j <= dunameis; j++) {
+                    const name = document.getElementById(`party${j}_name`).value || `Παράταξη ${j}`;
+                    tieText += `${name}: ${hypothetical[j]} | `;
+                }
+                tieText += `<br>`;
+        });
+
+        resultsContainer.innerHTML += tieText;
+        break; // Exit the loop without assigning the last seat definitively
     }
+
+    // Otherwise assign seat to party with max remainder
+    const idx = maxIndexes[0];
+    edresPerParty[idx]++;
+    upoloipo[idx] = 0;
+    edresLeft--;
+}
 
     // Εμφάνιση αποτελεσμάτων
     let resultsText = 'Αποτελέσματα Εδρών:<br>';
