@@ -55,15 +55,16 @@ document.getElementById('second-form').addEventListener('submit', function(event
     let metro = (totalVotes - akura) / totalEdres;
 
     let partyVotes = [], upoloipo = [], edresPerParty = new Array(dunameis + 1).fill(0);
+    let edresLeft = totalEdres;
 
     for (let i = 1; i <= dunameis; i++) {
         const votes = parseFloat(document.getElementById(`party${i}_votes`).value);
         partyVotes[i] = votes;
         edresPerParty[i] = Math.floor(votes / metro);
         upoloipo[i] = (votes / metro) - edresPerParty[i];
+        edresLeft= edresLeft - edresPerParty[i];
     }
 
-    let edresLeft = totalEdres - edresPerParty.reduce((a, b) => a + b, 0);
 
     while (edresLeft > 0) {
         let maxUpoloipo = -1;
