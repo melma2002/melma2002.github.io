@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Υπολογισμός Εδρών με Απλή Αναλογική</title>
+    <link rel="stylesheet" href="analogikh.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Υπολογισμός Εδρών Φοιτητικών Εκλογών</h1>
+        <form id="votes-edres">
+            <label for="votes"> Αριθμός ψηφισάντων: </label>
+            <input type="number" id="votes" required><br><br>
+
+            <label for="akura">Αριθμός άκυρων: </label>
+            <input type="number" id="akura" required><br><br>
+
+            <label for="edres">Έδρες του ΔΣ του Συλλόγου:</label>
+            <input type="number" id="edres" required><br><br>
+
+            <label for="dunameis">Αριθμός πολιτικών δυνάμεων-ψηφοδελτίων που κατέβηκαν</label>
+            <input type="number" id="dunameis" required><br><br>
+
+            <button type="submit">Συνέχεια</button>
+        </form>
+        
+        <form id="second-form" style="display:none;">
+            <div id="parties-container">
+            </div>
+            <button type="submit">Υπολογισμός Εδρών</button>
+        </form>
+
+        <h2>Αποτελέσματα:</h2>
+        <div id="results"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
